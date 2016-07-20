@@ -1,12 +1,13 @@
+'use strit';
 // grid of the game
-var xstep = 101;
-var ystep = 83;
+var UNIT_X = 101;
+var UNIT_Y = 83;
 // Enemies our player must avoid
 var Enemy = function() {
     // start outside of the canvas
-    this.x = - xstep;
+    this.x = - UNIT_X;
     //random y at 3 rows
-    this.y =  Math.floor(Math.random()*3+1)*ystep-20;
+    this.y =  Math.floor(Math.random()*3+1)*UNIT_Y-20;
     //random speed
     this.speed = 100 + Math.random()*50;
     this.sprite = 'images/enemy-bug.png';
@@ -18,7 +19,7 @@ Enemy.prototype.update = function(dt) {
     // if out of bound, reset x, random y
     if (this.x > 606) {
         this.x = -101;
-        this.y =  Math.floor(Math.random()*3+1)*ystep-20; // subtract 20 to fit the grid
+        this.y =  Math.floor(Math.random()*3+1)*UNIT_Y-20; // subtract 20 to fit the grid
     } else {
         this.x = this.x + this.speed * dt;
     }
@@ -37,11 +38,11 @@ Enemy.prototype.render = function() {
 // player
 var Player = function() {
     // initial location of the player
-    this.initialx = 2 * xstep;
-    this.initialy = 5 * ystep - 20; //subtract 20 to fit the grid
+    this.initialx = 2 * UNIT_X;
+    this.initialy = 5 * UNIT_Y - 20; //subtract 20 to fit the grid
     this.x = this.initialx;
     this.y = this.initialy;
-    his.sprite = 'images/char-boy.png';
+    this.sprite = 'images/char-boy.png';
 
     // keyboard input
     this.keyInput = null;
@@ -49,17 +50,17 @@ var Player = function() {
 
 // update position of player
 Player.prototype.update = function(dt) {
-    if(this.keyInput === 'left' && this.x >= xstep){ 
-        this.x = this.x - xstep;
+    if(this.keyInput === 'left' && this.x >= UNIT_X){ 
+        this.x = this.x - UNIT_X;
     //if right key is pressed and player is not on edge of map increment x 
-    }else if(this.keyInput === 'right' && this.x < 4 * xstep){
-        this.x = this.x + xstep;
+    }else if(this.keyInput === 'right' && this.x < 4 * UNIT_X){
+        this.x = this.x + UNIT_X;
     //if up key is pressed increment y 
     }else if(this.keyInput === 'up'){
-        this.y = this.y - ystep;
+        this.y = this.y - UNIT_Y;
     //if down key is pressed and player is not on edge of map decrement y 
-    }else if (this.keyInput === 'down' && this.y < 4 * ystep){
-        this.y = this.y + ystep;
+    }else if (this.keyInput === 'down' && this.y < 4 * UNIT_Y){
+        this.y = this.y + UNIT_Y;
     }   
     //If on water, reset
     if(this.y < 10){
@@ -87,7 +88,7 @@ allEnemies.push(new Enemy());
 allEnemies.push(new Enemy());
 
 // instantiate a player
-player = new Player();
+var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
